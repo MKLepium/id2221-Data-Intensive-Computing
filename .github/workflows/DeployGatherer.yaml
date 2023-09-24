@@ -3,7 +3,7 @@ name: Deploy test
 on:
   push:
     paths:
-      - '/Gatherer/**'  # Specify the path to your subproject
+      - 'Gatherer/**'  # Specify the path to your subproject
 
 jobs:
   deploy:
