@@ -32,7 +32,7 @@ jobs:
           port: ${{ secrets.SERVER_PORT }}
           script: |
             cd /opt/gatherer/Gatherer
-            nohup python data_gatherer.py & # Start the application
+            nohup python data_gatherer.py > app.log 2>&1 &
 
 
 
