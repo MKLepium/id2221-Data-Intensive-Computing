@@ -8,6 +8,9 @@ load_dotenv()
 
 # Get the API key from the environment variable
 api_key = os.getenv("API_KEY")
+if api_key is None:
+    print("API_KEY environment variable not set")
+    exit()
 
 # URL to fetch data from
 url = f"https://opendata.straeto.is/bus/{api_key}/status.xml"
