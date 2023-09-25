@@ -1,9 +1,9 @@
-name: Deploy Gatherer
+name: Deploy Kafka
 
 on:
   push:
     paths:
-      - 'Gatherer/**'  # Specify the path to your subproject
+      - 'Kafka/**'  # Specify the path to your subproject
 
 jobs:
   deploy:
@@ -20,8 +20,8 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_PASSWORD }}  # I missnamed it in GIT
           port: ${{ secrets.SERVER_PORT }}
-          source: 'Gatherer/'  # Specify the path of the /Gatherer folder in your GitHub repo
-          target: '/opt/gatherer'  # Specify the remote path where you want to copy your application
+          source: 'Kafka/'  # Specify the path of the /Gatherer folder in your GitHub repo
+          target: '/opt/Gatherer'  # Specify the remote path where you want to copy your application
 
       - name: Start application
         uses: appleboy/ssh-action@master
@@ -30,9 +30,13 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_PASSWORD }}  # I missnamed it in GIT
           port: ${{ secrets.SERVER_PORT }}
+          # TODO: Change the script to actually use kafka.
+          # TODO: Install Kafka on the server.
+          # l39: is used to save the PID of the process to a file.
           script: |
-            cd /opt/gatherer/Gatherer
+            cd /opt/gatherer/Kafka
             nohup python data_gatherer.py > app.log 2>&1 &
+            echo $! > pidfile.txt
 
 
 
