@@ -38,7 +38,7 @@ jobs:
           script: |
             cd /opt/Gatherer
             echo "test"
-            if pgrep -f "python data_gatherer.py" > /dev/null; then pkill -f "python data_gatherer.py"; fi
+            if pgrep -f "python data_gatherer.py"; then pkill -f "python data_gatherer.py"; fi
             echo "test2"
             nohup python data_gatherer.py > app.log 2>&1 &
 
