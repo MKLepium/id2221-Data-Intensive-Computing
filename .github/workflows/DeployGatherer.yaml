@@ -21,7 +21,7 @@ jobs:
           key: ${{ secrets.SERVER_PASSWORD }}  # I missnamed it in GIT
           port: ${{ secrets.SERVER_PORT }}
           source: 'Gatherer/'  # Specify the path of the /Gatherer folder in your GitHub repo
-          target: '/opt/gatherer'  # Specify the remote path where you want to copy your application
+          target: '/opt'  # Specify the remote path where you want to copy your application
 
       - name: Start application
         uses: appleboy/ssh-action@master

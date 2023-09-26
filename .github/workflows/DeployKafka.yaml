@@ -13,7 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Copy application code to server
+      - name: Copy Config toserver
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.SERVER_HOST }}
@@ -21,7 +21,7 @@ jobs:
           key: ${{ secrets.SERVER_PASSWORD }}  # I missnamed it in GIT
           port: ${{ secrets.SERVER_PORT }}
           source: 'Kafka/'  # Specify the path of the /Gatherer folder in your GitHub repo
-          target: '/opt/Gatherer'  # Specify the remote path where you want to copy your application
+          target: '/opt'  # Specify the remote path where you want to copy your application
 
       - name: Start application
         uses: appleboy/ssh-action@master
@@ -32,10 +32,13 @@ jobs:
           port: ${{ secrets.SERVER_PORT }}
           # TODO: Change the script to actually use kafka.
           # TODO: Check if permissions are correct.
+          # TODO: Not sure if the restart of both is necessary. But for the time it works.
           script: |
             cp /opt/Gatherer/Kafka/server.properties /home/kafka/kafka/config/server.properties
             cp /opt/Gatherer/Kafka/zookeeper.properties /home/kafka/kafka/config/zookeeper.properties 
-            
+            sudo systemctl restart zookeeper
+            sudo systemctl restart kafka
+
             
 
 
