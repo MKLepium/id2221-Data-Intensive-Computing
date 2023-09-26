@@ -37,7 +37,7 @@ jobs:
           # Do not ask me why this is so ugly.
           script: |
             cd /opt/Gatherer
-            pkill -f "python data_gatherer.py" 2>&1 >/dev/null
+            pgrep -f "python data_gatherer.py" > /dev/null && pkill -f "python data_gatherer.py"
             nohup python data_gatherer.py > app.log 2>&1 &
 
 
