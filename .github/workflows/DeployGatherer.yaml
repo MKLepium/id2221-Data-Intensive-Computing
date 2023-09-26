@@ -37,8 +37,7 @@ jobs:
           # Do not ask me why this is so ugly.
           script: |
             cd /opt/Gatherer
-            nohup pkill -f "python data_gatherer.py" 2>/dev/null &
-            sleep 5
+            nohup pkill -f "python data_gatherer.py" 2>/dev/null & && sleep 5
             nohup python data_gatherer.py > app.log 2>&1 &
 
 
