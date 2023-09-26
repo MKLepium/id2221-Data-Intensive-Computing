@@ -1,5 +1,7 @@
 name: Deploy Kafka
 
+depends_on: Deploy Gatherer
+
 on:
   push:
     paths:
