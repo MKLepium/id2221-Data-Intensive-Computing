@@ -25,6 +25,10 @@ jobs:
           source: 'Gatherer/'  # Specify the path of the /Gatherer folder in your GitHub repo
           target: '/opt'  # Specify the remote path where you want to copy your application
 
+      - name: Kill Previous Process
+        run: |
+          pkill -f "python data_gatherer.py" || true  # Terminate previous process if it exists
+
       - name: Start application
         uses: appleboy/ssh-action@master
         with:
@@ -33,7 +37,7 @@ jobs:
           key: ${{ secrets.SERVER_PASSWORD }}  # I missnamed it in GIT
           port: ${{ secrets.SERVER_PORT }}
           script: |
-            cd /opt/gatherer/Gatherer
+            cd /opt/Gatherer
             nohup python data_gatherer.py > app.log 2>&1 &
 
 
