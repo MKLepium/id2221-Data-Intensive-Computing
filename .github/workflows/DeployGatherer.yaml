@@ -36,7 +36,7 @@ jobs:
           port: ${{ secrets.SERVER_PORT }}
           script: |
             cd /opt/Gatherer
-            pkill -f "python data_gatherer.py" || true  # Terminate previous process if it exists
+            pkill -f "python data_gatherer.py" || true
             nohup python data_gatherer.py > app.log 2>&1 &
 
 
