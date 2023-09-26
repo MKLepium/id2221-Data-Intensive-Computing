@@ -1,6 +1,6 @@
 # Start Zookeeper:
 zookeeper-server-start.sh Kafka/zookeeper.properties 
-
+KafkaUserPePePe
 # Start Kafka Server:
 kafka-server-start.sh Kafka/server.properties 
 

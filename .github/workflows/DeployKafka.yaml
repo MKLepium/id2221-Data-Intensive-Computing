@@ -31,12 +31,13 @@ jobs:
           key: ${{ secrets.SERVER_PASSWORD }}  # I missnamed it in GIT
           port: ${{ secrets.SERVER_PORT }}
           # TODO: Change the script to actually use kafka.
-          # TODO: Install Kafka on the server.
-          # l39: is used to save the PID of the process to a file.
+          # TODO: Check if permissions are correct.
           script: |
-            cd /opt/gatherer/Kafka
-            nohup python data_gatherer.py > app.log 2>&1 &
-            echo $! > pidfile.txt
+            cp /opt/Gatherer/Kafka/server.properties /home/kafka/kafka/config/server.properties
+            cp /opt/Gatherer/Kafka/zookeeper.properties /home/kafka/kafka/config/zookeeper.properties 
+            
+            
+
 
 
 
