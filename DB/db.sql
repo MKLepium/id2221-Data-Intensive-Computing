@@ -1,4 +1,4 @@
--- Create a schema for the BusData
+-- Create a schema for the BusData-
 CREATE SCHEMA IF NOT EXISTS bus_data_schema;
 
 -- Create a table to store BusData
