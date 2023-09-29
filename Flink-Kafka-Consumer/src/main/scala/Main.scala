@@ -12,7 +12,7 @@ object Main extends App {
   val kafkaConsumer = new FlinkKafkaConsumer[String]("test", new SimpleStringSchema(), properties)
 
   // Set the maximum number of records to consume to 1 for testing
-  kafkaConsumer.setMaxRecords(1)
+  kafkaConsumer.setMaxRecords(10)
 
   val stream = env
     .addSource(kafkaConsumer)
