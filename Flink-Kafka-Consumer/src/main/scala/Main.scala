@@ -9,13 +9,17 @@ object Main extends App {
   val properties = new Properties()
   properties.setProperty("bootstrap.servers", "localhost:9092")
   properties.setProperty("group.id", "test")
+  val kafkaConsumer = new FlinkKafkaConsumer[String]("test", new SimpleStringSchema(), properties)
+
+  // Set the maximum number of records to consume to 1 for testing
+  kafkaConsumer.setMaxRecords(1)
+
   val stream = env
-    .addSource(new FlinkKafkaConsumer[String]("test", new SimpleStringSchema(), properties))
+    .addSource(kafkaConsumer)
     
   val busDataStream: DataStream[BusData] = stream
     .process(new ParseXMLFunction)
 
   busDataStream.print()
-  stream.print()
   env.execute("Flink Kafka Consumer")
 }
