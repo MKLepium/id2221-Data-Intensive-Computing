@@ -12,7 +12,9 @@ CREATE TABLE IF NOT EXISTS bus_data_schema.bus_data (
     stop VARCHAR(255),
     next VARCHAR(255),
     code VARCHAR(255),
-    PRIMARY KEY (time)
+    dev VARCHAR(255),
+    fer VARCHAR(255),
+    PRIMARY KEY (dev, time)
 );
 
 

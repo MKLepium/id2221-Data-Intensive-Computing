@@ -19,5 +19,4 @@ object Main extends App {
   busDataStream.print()
   stream.print()
   env.execute("Flink Kafka Consumer")
-  println("Hello, World!")
 }
