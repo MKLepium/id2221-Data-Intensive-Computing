@@ -3,3 +3,8 @@
 
 # Ignore .vscode folder
 .vscode
+
+# Ignore .metals folder
+.metals
+
+.scala-build
