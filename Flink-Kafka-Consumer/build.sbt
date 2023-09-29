@@ -1,6 +1,6 @@
 scalaVersion := "2.12.11"
 
-// Maybe I'll modify this later.
+// Maybe I'll modify this later. 
 name := "hello-world2"
 organization := "ch.epfl.scala"
 version := "1.0"

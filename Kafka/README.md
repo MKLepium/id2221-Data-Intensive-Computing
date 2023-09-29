@@ -1,4 +1,4 @@
-# Start Zookeeper:
+# Start Zookeeper: 
 zookeeper-server-start.sh Kafka/zookeeper.properties 
 
 
