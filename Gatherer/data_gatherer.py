@@ -13,7 +13,7 @@ if api_key is None:
     print("API_KEY environment variable not set..")
     exit()
 
-# Kafka configuration
+# Kafka configuration 
 kafka_config = {
     'bootstrap.servers': 'localhost:9092',  # Replace with your Kafka broker(s)
     'client.id': 'xml-producer'
