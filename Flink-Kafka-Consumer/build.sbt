@@ -11,7 +11,7 @@ libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % 
 libraryDependencies += "org.apache.flink" %% "flink-scala" % "1.17.1"
 // https://mvnrepository.com/artifact/org.apache.flink/flink-streaming-scala
 libraryDependencies += "org.apache.flink" %% "flink-streaming-scala" % "1.17.1" % "provided"
-libraryDependencies += "org.apache.flink" %% "flink-connector-kafka" % "3.0.0-1.17"
+libraryDependencies += "org.apache.flink" %% "flink-connector-kafka" % "1.14.6"
 // https://mvnrepository.com/artifact/org.apache.flink/flink-connector-kafka-base
 libraryDependencies += "org.apache.flink" %% "flink-connector-kafka-base" % "1.11.6"
 libraryDependencies += "org.postgresql" % "postgresql" % "42.6.0"
