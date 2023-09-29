@@ -30,6 +30,7 @@ libraryDependencies += "org.apache.flink" %% "flink-scala" % "1.12.2"
 libraryDependencies += "org.apache.flink" %% "flink-streaming-scala" % "1.12.2"
 libraryDependencies += "org.apache.flink" %% "flink-connector-kafka" % "1.12.2"
 libraryDependencies += "org.apache.flink" %% "flink-connector-kafka-base" % "1.12.2"
+libraryDependencies += "org.postgresql" % "postgresql" % "42.6.0"
 
 
 // Here, `libraryDependencies` is a set of dependencies, and by using `+=`,
