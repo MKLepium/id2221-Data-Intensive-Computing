@@ -37,7 +37,7 @@ jobs:
           # Do not ask me why this is so ugly.
           # This was an adventure. So feel free to ask me, because it hurt and I have knowledge to share xd
           script: |
-            cd /opt/Gatherer-
+            cd /opt/Gatherer
             if pgrep -f "python data_gatherer.py" | grep -v "^$$\$"; then pkill -f "python data_gatherer.py"; fi
             nohup python data_gatherer.py > app.log 2>&1 &
 
