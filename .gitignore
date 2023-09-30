@@ -10,4 +10,4 @@
 .scala-build
 
 # Ignore all .target folders
-**/.target
+**/target
