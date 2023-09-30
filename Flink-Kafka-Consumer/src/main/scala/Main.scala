@@ -15,8 +15,9 @@ object Main extends App {
   properties.setProperty("bootstrap.servers", "localhost:9092")
   properties.setProperty("group.id", UUID.randomUUID().toString())
   properties.setProperty("auto.offset.reset", "earliest")
-
   val kafkaConsumer = new FlinkKafkaConsumer[String]("xml-data", new SimpleStringSchema(), properties)
+  kafkaConsumer.setStartFromSpecificOffsets(Offset.of("xml-data", 0, 1))
+
 
 
   val stream = env
