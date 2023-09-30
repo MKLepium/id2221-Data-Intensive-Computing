@@ -19,9 +19,9 @@ object Main extends App {
   val stream = env
     .addSource(kafkaConsumer)
     
-  val busDataStream: DataStream[BusData] = stream
+  val busDataStream = stream
     .process(ParseXMLFunction)
 
-  busDataStream.print()
+
   env.execute("Flink Kafka Consumer")
 }

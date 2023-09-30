@@ -6,11 +6,12 @@ import com.Flink_Kafka_Consumer.XML_Parser.BusData
 
 object DataBase_Connector {
 
-    def DataBase_Connector(): Unit = {
+    def getConnection(): Connection = {
         val dbUrl = "jdbc:postgresql://127.0.0.1:5432/bus_data"
         val dbUser = "postgres"
         val dbPassword = "db_password"
         val connection: Connection = DriverManager.getConnection(dbUrl, dbUser, dbPassword)
+        connection
     }
 
 
@@ -44,6 +45,7 @@ object DataBase_Connector {
             case e: Exception => e.printStackTrace()
         } finally {
             preparedStatement.close()
+            connection.close()
         }
     }
 
