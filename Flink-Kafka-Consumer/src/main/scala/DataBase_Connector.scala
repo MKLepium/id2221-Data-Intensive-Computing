@@ -44,7 +44,9 @@ object DataBase_Connector {
             // Execute the insert statement
             preparedStatement.executeUpdate()
         } catch {
-            case e: Exception => e.printStackTrace()
+            case e: Exception => 
+                println("Error inserting data into database")
+                //e.printStackTrace()
         } finally {
             preparedStatement.close()
             connection.close()

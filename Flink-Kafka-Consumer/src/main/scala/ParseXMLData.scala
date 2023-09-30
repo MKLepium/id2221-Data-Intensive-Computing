@@ -31,7 +31,7 @@ object ParseXMLFunction extends ProcessFunction[String, Unit] {
     val busNodes = busElement \ "bus"
     //println(s"Processing element: $timestamp, Result: $busNodes")
     for(node <- busNodes) {
-      println(s"Processing node: $node")
+      //println(s"Processing node: $node")
       // Extract common fields from the first bus element (assuming they are the same for all)
       if (node.nonEmpty) {
         val busAttributes = node.head.attributes
@@ -48,7 +48,7 @@ object ParseXMLFunction extends ProcessFunction[String, Unit] {
 
         // Create a BusData object
         val busData = BusData(dev, timestamp, lat, lon, head, fix, route, stop, next, code, fer)
-        println(s"BusData object: $busData")
+        //println(s"BusData object: $busData")
 
         // Send the BusData object to the "output collector"
         val conn = DataBase_Connector.getConnection()
