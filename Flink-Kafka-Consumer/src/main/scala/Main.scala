@@ -3,6 +3,7 @@ import org.apache.flink.streaming.api.scala._
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer
 import org.apache.flink.api.common.serialization.SimpleStringSchema
 import java.sql.{Connection, DriverManager, ResultSet}
+import ParseXMLFunction.BusData
 
 object Main extends App {
   val env = StreamExecutionEnvironment.getExecutionEnvironment
