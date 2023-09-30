@@ -7,7 +7,7 @@ import org.apache.flink.api.common.serialization.SimpleStringSchema
 import java.sql.{Connection, DriverManager, ResultSet}
 import com.Flink_Kafka_Consumer.XML_Parser.ParseXMLFunction
 import com.Flink_Kafka_Consumer.XML_Parser.BusData
-import uuid.UUID
+import java.util.UUID
 
 object Main extends App {
   val env = StreamExecutionEnvironment.getExecutionEnvironment
@@ -15,7 +15,7 @@ object Main extends App {
   properties.setProperty("bootstrap.servers", "localhost:9092")
   properties.setProperty("group.id", UUID.randomUUID().toString())
   properties.setProperty("auto.offset.reset", "earliest")
-  
+
   val kafkaConsumer = new FlinkKafkaConsumer[String]("xml-data", new SimpleStringSchema(), properties)
 
 
