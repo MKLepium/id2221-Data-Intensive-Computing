@@ -29,30 +29,33 @@ object ParseXMLFunction extends ProcessFunction[String, Unit] {
     val busElement = scala.xml.XML.loadString(xml)
     val timestamp = busElement.attribute("timestamp").map(_.text).getOrElse("")
     val busNodes = busElement \ "bus"
-    println(s"Processing element: $timestamp, Result: $busNodes")
+    //println(s"Processing element: $timestamp, Result: $busNodes")
+    for(node <- busNodes) {
+      println(s"Processing node: $node")
+      // Extract common fields from the first bus element (assuming they are the same for all)
+      if (busNodes.nonEmpty) {
+        val busAttributes = busNodes.head.attributes
+        val dev = busAttributes("dev").text
+        val lat = busAttributes("lat").text
+        val lon = busAttributes("lon").text
+        val head = busAttributes("head").text
+        val fix = busAttributes("fix").text
+        val route = busAttributes("route").text
+        val stop = busAttributes("stop").text
+        val next = busAttributes("next").text
+        val code = busAttributes("code").text
+        val fer = busAttributes("fer").text
 
-    
+        // Create a BusData object
+        val busData = BusData(dev, timestamp, lat, lon, head, fix, route, stop, next, code, fer)
 
-    // Extract common fields from the first bus element (assuming they are the same for all)
-    if (busNodes.nonEmpty) {
-      val busAttributes = busNodes.head.attributes
-      val dev = busAttributes("dev").text
-      val lat = busAttributes("lat").text
-      val lon = busAttributes("lon").text
-      val head = busAttributes("head").text
-      val fix = busAttributes("fix").text
-      val route = busAttributes("route").text
-      val stop = busAttributes("stop").text
-      val next = busAttributes("next").text
-      val code = busAttributes("code").text
-      val fer = busAttributes("fer").text
+        // Send the BusData object to the "output collector"
+        val conn = DataBase_Connector.getConnection()
+        DataBase_Connector.send_entry(busData, conn)
+      }
+      
 
-      // Create a BusData object
-      val busData = BusData(dev, timestamp, lat, lon, head, fix, route, stop, next, code, fer)
 
-      // Send the BusData object to the "output collector"
-      val conn = DataBase_Connector.getConnection()
-      DataBase_Connector.send_entry(busData, conn)
     }
 
   }
