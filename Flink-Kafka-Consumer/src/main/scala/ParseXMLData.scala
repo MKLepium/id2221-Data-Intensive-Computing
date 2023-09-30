@@ -50,6 +50,8 @@ object ParseXMLFunction extends ProcessFunction[String, BusData] {
 
       // Emit the BusData object
       out.collect(busData)
+    } else {
+      out.collect(BusData("", "", "", "", "", "", "", "", "", "", ""))
     }
   }
 }
