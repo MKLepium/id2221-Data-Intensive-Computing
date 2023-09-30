@@ -35,8 +35,8 @@ jobs:
           # TODO: Check if permissions are correct.
           # TODO: Not sure if the restart of both is necessary. But for the time it works.
           script: |
-            cp /opt/Gatherer/Kafka/server.properties /home/kafka/kafka/config/server.properties
-            cp /opt/Gatherer/Kafka/zookeeper.properties /home/kafka/kafka/config/zookeeper.properties 
+            cp /opt/Gatherer/Kafka/server.properties /opt/installed-kafka/config/server.properties
+            cp /opt/Gatherer/Kafka/zookeeper.properties /opt/installed-kafka/config/zookeeper.properties 
             sudo systemctl restart zookeeper
             sudo systemctl restart kafka
 
