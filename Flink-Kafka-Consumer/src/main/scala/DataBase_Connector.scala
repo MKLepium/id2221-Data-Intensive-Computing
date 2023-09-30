@@ -1,6 +1,7 @@
 package com.Flink_Kafka_Consumer.DataBase_Connector
 import java.sql.{Connection, DriverManager, PreparedStatement}
 
+import com.Flink_Kafka_Consumer.XML_Parser.BusData
 
 
 class DataBase_Connector {
