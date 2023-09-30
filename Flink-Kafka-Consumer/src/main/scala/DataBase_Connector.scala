@@ -17,6 +17,7 @@ object DataBase_Connector {
 
 
     def send_entry(bus_data: BusData, connection: Connection): Unit = {
+        println("Sending entry to database")
         val insertSQL = """
         INSERT INTO bus_data_schema.bus_data
         (dev, time, lat, lon, head, fix, route, stop, next, code, fer)
@@ -38,6 +39,7 @@ object DataBase_Connector {
             preparedStatement.setString(9, bus_data.next)
             preparedStatement.setString(10, bus_data.code)
             preparedStatement.setString(11, bus_data.fer)
+
 
             // Execute the insert statement
             preparedStatement.executeUpdate()

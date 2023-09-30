@@ -50,7 +50,7 @@ object ParseXMLFunction extends ProcessFunction[String, Unit] {
       // Create a BusData object
       val busData = BusData(dev, timestamp, lat, lon, head, fix, route, stop, next, code, fer)
 
-      // Send the BusData object to the output collector
+      // Send the BusData object to the "output collector"
       val conn = DataBase_Connector.getConnection()
       DataBase_Connector.send_entry(busData, conn)
     }
