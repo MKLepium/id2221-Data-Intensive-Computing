@@ -13,7 +13,7 @@ object Main extends App {
   val properties = new Properties()
   properties.setProperty("bootstrap.servers", "localhost:9092")
   properties.setProperty("group.id", "test")
-  val kafkaConsumer = new FlinkKafkaConsumer[String]("test", new SimpleStringSchema(), properties)
+  val kafkaConsumer = new FlinkKafkaConsumer[String]("xml-data", new SimpleStringSchema(), properties)
 
 
   val stream = env
