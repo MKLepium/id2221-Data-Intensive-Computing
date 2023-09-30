@@ -1,9 +1,12 @@
+package com.Flink_Kafka_Consumer
+
 import java.util.Properties
 import org.apache.flink.streaming.api.scala._
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer
 import org.apache.flink.api.common.serialization.SimpleStringSchema
 import java.sql.{Connection, DriverManager, ResultSet}
-import ParseXMLFunction.BusData
+import com.Flink_Kafka_Consumer.XML_Parser.ParseXMLFunction
+import com.Flink_Kafka_Consumer.XML_Parser.BusData
 
 object Main extends App {
   val env = StreamExecutionEnvironment.getExecutionEnvironment
@@ -11,7 +14,6 @@ object Main extends App {
   properties.setProperty("bootstrap.servers", "localhost:9092")
   properties.setProperty("group.id", "test")
   val kafkaConsumer = new FlinkKafkaConsumer[String]("test", new SimpleStringSchema(), properties)
-
 
 
   val stream = env

@@ -1,6 +1,10 @@
+package com.Flink_Kafka_Consumer.XML_Parser
+
 import org.apache.flink.streaming.api.functions.ProcessFunction
 import org.apache.flink.util.Collector
 import org.apache.flink.api.scala._
+
+
 
 case class BusData(
   dev: String,
