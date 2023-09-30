@@ -4,7 +4,7 @@ import java.sql.{Connection, DriverManager, PreparedStatement}
 import com.Flink_Kafka_Consumer.XML_Parser.BusData
 
 
-class DataBase_Connector {
+object DataBase_Connector {
 
     def DataBase_Connector(): Unit = {
         val dbUrl = "jdbc:postgresql://127.0.0.1:5432/bus_data"

@@ -1,10 +1,8 @@
 package com.Flink_Kafka_Consumer.XML_Parser
 
 import org.apache.flink.streaming.api.functions.ProcessFunction
-import org.apache.flink.util.Collector
 import org.apache.flink.api.scala._
-
-
+import com.Flink_Kafka_Consumer.DataBase_Connector.DataBase_Connector // Import your database connector
 
 case class BusData(
   dev: String,
@@ -45,13 +43,12 @@ object ParseXMLFunction extends ProcessFunction[String, BusData] {
       val code = busAttributes("code").text
       val fer = busAttributes("fer").text
 
-      // Create a BusData object with the common fields and the timestamp
+      // Create a BusData object
       val busData = BusData(dev, timestamp, lat, lon, head, fix, route, stop, next, code, fer)
 
-      // Emit the BusData object
-      out.collect(busData)
-    } else {
-      out.collect(BusData("", "", "", "", "", "", "", "", "", "", ""))
+      // Send the BusData object to the output collector
+      DataBase_Connector.send_entry(busData)
     }
+
   }
 }
