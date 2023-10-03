@@ -1,0 +1,178 @@
+/* Customize the map container's size */
+#map {
+    height: 400px;
+    width: 100%;
+}
+  
+.number-marker {
+    background-color: #000;
+    color: #fff;
+    border-radius: 50%; /* Make it a circle */
+    font-size: 10px;
+    width: 15px;
+    height: 15px;
+    line-height: 15px;
+    text-align: center;
+}
+
+.route-1 {
+    background-color: #ef4934;
+    color: #fff;
+}
+
+.route-2 {
+    background-color: #acc437;
+    color: #000;
+}
+
+.route-3 {
+    background-color: #fdbc14;
+    color: #000;
+}
+
+.route-4 {
+    background-color: #306e4a;
+    color: #fff;
+}
+
+.route-5 {
+    background-color: #db1a5a;
+    color: #fff;
+}
+
+.route-6 {
+    background-color: #00a754;
+    color: #fff;
+}
+
+.route-7 {
+    background-color: #cb4138;
+    color: #fff;
+}
+
+.route-8 {
+    background-color: #11b09b;
+    color: #fff;
+}
+
+.route-11 {
+    background-color: #e35289;
+    color: #fff;
+}
+
+.route-12 {
+    background-color: #0a68b3;
+    color: #fff;
+}
+
+.route-13 {
+    background-color: #00a2b5;
+    color: #fff;
+}
+
+.route-14 {
+    background-color: #7157a4;
+    color: #fff;
+}
+
+.route-15 {
+    background-color: #215266;
+    color: #fff;
+}
+
+.route-16 {
+    background-color: #d9c127;
+    color: #000;
+}
+
+.route-17 {
+    background-color: #564b1e;
+    color: #fff;
+}
+
+.route-18 {
+    background-color: #f26c4e;
+    color: #fff;
+}
+
+.route-19 {
+    background-color: #589b55;
+    color: #fff;
+}
+
+.route-21 {
+    background-color: #e0b33c;
+    color: #000;
+}
+
+.route-22 {
+    background-color: #00a97d;
+    color: #fff;
+}
+
+.route-23 {
+    background-color: #292565;
+    color: #fff;
+}
+
+.route-24 {
+    background-color: #26566c;
+    color: #fff;
+}
+
+.route-25 {
+    background-color: #2491d3;
+    color: #fff;
+}
+
+.route-26 {
+    background-color: #0a68b3;
+    color: #fff;
+}
+
+.route-27 {
+    background-color: #69ba9b;
+    color: #fff;
+}
+
+.route-28 {
+    background-color: #bd107d;
+    color: #fff;
+}
+
+.route-29 {
+    background-color: #494845;
+    color: #fff;
+}
+
+.route-31 {
+    background-color: #6b5661;
+    color: #fff;
+}
+
+.route-35 {
+    background-color: #206574;
+    color: #fff;
+}
+
+.route-36 {
+    background-color: #f18b28;
+    color: #fff;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
