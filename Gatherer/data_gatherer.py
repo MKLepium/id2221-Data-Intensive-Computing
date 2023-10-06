@@ -5,6 +5,7 @@ import os
 from confluent_kafka import Producer
 
 # Load environment variables from .env file
+# 
 load_dotenv()
 
 # Get the API key from the environment variable
