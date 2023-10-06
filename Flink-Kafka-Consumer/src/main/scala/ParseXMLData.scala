@@ -29,7 +29,7 @@ object ParseXMLFunction extends ProcessFunction[String, Unit] {
     val busElement = scala.xml.XML.loadString(xml)
     val timestamp = busElement.attribute("timestamp").map(_.text).getOrElse("")
     val busNodes = busElement \ "bus"
-    //println(s"Processing element: $timestamp, Result: $busNodes")
+    println(s"Processing element: $timestamp, Result: $busNodes")
     for(node <- busNodes) {
       //println(s"Processing node: $node")
       // Extract common fields from the first bus element (assuming they are the same for all)
