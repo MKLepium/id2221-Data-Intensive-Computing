@@ -12,7 +12,7 @@ db_params = {
     'port': '5432'
 }
 
-# Define your database query function
+# Define your database query function 
 def get_data_from_db():
     conn = psycopg2.connect(**db_params)
     cur = conn.cursor()
