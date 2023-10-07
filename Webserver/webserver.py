@@ -13,19 +13,21 @@ db_params = {
 }
 
 # Define your database query function  
-def get_data_from_db():
+def get_latest_bus_data_from_db():
     conn = psycopg2.connect(**db_params)
     cur = conn.cursor()
     # Returns the fer, route, lat and lon of all buses (potentially only buses with route 1-36 if we filter that in the backend, but we could also do it in the frontend no problem)
     # filter for only busses with route 1-36
     cur.execute("""
-        SELECT fer, route, lat, lon
-        FROM bus_data_schema.bus_data
-        WHERE
-            CAST(SUBSTRING(fer, '^\d+') AS INTEGER) >= 0
-            AND CAST(SUBSTRING(fer, '^\d+') AS INTEGER) <= 36
-        ORDER BY "time" DESC
-        LIMIT 1
+        SELECT b.time, b.fer, b.route, b.lat, b.lon
+            FROM bus_data_schema.bus_data b
+            JOIN (
+                SELECT MAX("time") AS max_time
+                FROM bus_data_schema.bus_data
+                WHERE
+                    CAST(SUBSTRING(fer, '^\d+') AS INTEGER) >= 0
+                    AND CAST(SUBSTRING(fer, '^\d+') AS INTEGER) <= 36
+            ) t ON b."time" = t.max_time
     """)
 
 
@@ -39,7 +41,7 @@ def get_data_from_db():
 @app.route('/bus/getData', methods=['GET'])
 def get_bus_data():
     try:
-        data = get_data_from_db()
+        data = get_latest_bus_data_from_db()
         return jsonify({"data": data})
     except Exception as e:
         return jsonify({"error": str(e)})
