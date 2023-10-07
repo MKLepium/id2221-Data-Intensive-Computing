@@ -31,7 +31,6 @@ def get_latest_bus_data_from_db():
     """)
 
 
-
     data = cur.fetchall()
     cur.close()
     conn.close()
