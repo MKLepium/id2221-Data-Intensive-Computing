@@ -26,7 +26,7 @@ def get_data_from_db():
     return data
 
 # Endpoint to retrieve data
-@app.route('/bus?getData', methods=['GET'])
+@app.route('/bus/getData', methods=['GET'])
 def get_bus_data():
     try:
         data = get_data_from_db()
@@ -35,4 +35,4 @@ def get_bus_data():
         return jsonify({"error": str(e)})
 
 if __name__ == '__main__':
-    app.run(debug=True, port=8080)
+    app.run(debug=True, port=8080, host='0.0.0.0')
