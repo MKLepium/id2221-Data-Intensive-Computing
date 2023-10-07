@@ -18,7 +18,17 @@ def get_data_from_db():
     cur = conn.cursor()
     # Returns the fer, route, lat and lon of all buses (potentially only buses with route 1-36 if we filter that in the backend, but we could also do it in the frontend no problem)
     # filter for only busses with route 1-36
-    cur.execute("SELECT fer, route, lat, lon FROM bus_data_schema.bus_data")
+    cur.execute("""
+        SELECT fer, route, lat, lon
+        FROM bus_data_schema.bus_data
+        WHERE
+            CAST(SUBSTRING(fer, '^\d+') AS INTEGER) >= 0
+            AND CAST(SUBSTRING(fer, '^\d+') AS INTEGER) <= 36
+        ORDER BY "time" DESC
+        LIMIT 1
+    """)
+
+
 
     data = cur.fetchall()
     cur.close()
