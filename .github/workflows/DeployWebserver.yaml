@@ -1,0 +1,32 @@
+name: Deploy Kafka
+
+
+on:
+  push:
+    paths:
+      - 'Webserver/**'  # Specify the path to your subproject
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Copy Config toserver
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_PASSWORD }}  # I missnamed it in GIT
+          port: ${{ secrets.SERVER_PORT }}
+          source: 'Webserver/'  # Specify the path of the /Gatherer folder in your GitHub repo
+          target: '/opt'  # Specify the remote path where you want to copy your application
+
+
+            
+
+
+
+
