@@ -7,8 +7,8 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(mymap);
 
 fetchData();
-// Implement set interval after creating clear all markers function
-// setInterval(fetchData, 5000);
+
+setInterval(fetchData, 5000); //5 seconds
 
 function fetchData() {
 // Define the URL to fetch JSON data from
@@ -31,17 +31,11 @@ fetch(url, {headers: {'Content-Type':'applicaton/json'}, method: 'GET'})
       // Store the JSON data in the "buses" object
       buses = data.data;
       // You can now work with the "buses" object here
-      console.log(buses);
+      
+      console.log(buses.length); //to see how many datapoints we get
 
-      // remove markers
-      //TODO 
-
-      Object.keys(buses).forEach(bus => {
-          let currRoute = buses[bus][2];
-          let currLat = buses[bus][3];
-          let currLon = buses[bus][4];
-          createNumberMarker(currRoute, currLat, currLon, 'route-'+currRoute).addTo(mymap);
-        });
+      clearMarkers();
+      addMarkers(buses);
     })
     .catch(error => {
         console.error('There was a problem with the fetch operation:', error);
@@ -69,4 +63,21 @@ function createNumberMarker(number, lat, lon, css) {
     });
 
     return L.marker([lat, lon], { icon: customIcon });
+}
+
+function addMarkers(buses) {
+    Object.keys(buses).forEach(bus => {
+        let currRoute = buses[bus][2];
+        let currLat = buses[bus][3];
+        let currLon = buses[bus][4];
+        createNumberMarker(currRoute, currLat, currLon, 'route-'+currRoute).addTo(mymap);
+      });
+}
+
+function clearMarkers() {
+    mymap.eachLayer(function (layer) {
+        if (layer instanceof L.Marker) {
+            mymap.removeLayer(layer);
+        }
+    });
 }
