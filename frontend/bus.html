@@ -7,11 +7,6 @@
     <!-- Include Leaflet CSS and JavaScript -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    <!-- <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js" integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw==" crossorigin=""></script> -->
-    <!-- <script src="https://unpkg.com/leaflet.markercluster@1.3.0/dist/leaflet.markercluster.js"></script> -->
-    <!-- Include AwesomeMarkers for Leaflet -->
-    <!-- <link rel="stylesheet" href="https://unpkg.com/leaflet.awesome-markers@2.0.2/dist/leaflet.awesome-markers.css" />
-    <script src="https://unpkg.com/leaflet.awesome-markers@2.0.2/dist/leaflet.awesome-markers.js"></script> -->
     <!-- Include Axios -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!-- Include your custom CSS -->
@@ -20,6 +15,19 @@
 <body>
     <div id="map"></div>
 
+    <form id="routeForm">
+        <label for="routeNumber">Route number:</label>
+        <input type="text" id="routeNumber" name="routeNumber" required>
+        <button type="button" onclick="processRoutes()">Get route name</button>
+    </form>
+
+    <form id="stopForm">
+        <label for="stopNumber">Stop number:</label>
+        <input type="text" id="stopNumber" name="stopNumber" required>
+        <button type="button" onclick="processStops()">Get stop name</button>
+    </form>
+
+    <div id="output"></div>
     <!-- Include your custom JavaScript -->
     <script src="bus.js"></script>
 </body>

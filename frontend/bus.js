@@ -31,7 +31,7 @@ fetch(url, {headers: {'Content-Type':'applicaton/json'}, method: 'GET'})
       // Store the JSON data in the "buses" object
       buses = data.data;
       // You can now work with the "buses" object here
-      
+
       console.log(buses.length); //to see how many datapoints we get
 
       clearMarkers();
@@ -79,5 +79,98 @@ function clearMarkers() {
         if (layer instanceof L.Marker) {
             mymap.removeLayer(layer);
         }
+    });
+}
+
+function processRoutes() {
+    getRoutes()
+        .then(data => {
+            // Handle the data here or pass it to another function
+            console.log('Data received:', data);
+            const parsedData = parseCSV(data);
+            const routeNumberInput = document.getElementById('routeNumber');
+            const routeNumber = routeNumberInput.value;
+
+            const specificData = getRouteInfo(parsedData,routeNumber);
+            const routeLongName = specificData.route_long_name;
+            const outputDiv = document.getElementById('output');
+            outputDiv.innerHTML = `Route Name for Route Number ${routeNumber}: ${routeLongName}`;
+        })
+        .catch(error => {
+            // Handle errors here
+            console.error('Error:', error);
+            const outputDiv = document.getElementById('output');
+            outputDiv.innerHTML = `Route number invalid`;
+        });
+}
+
+function processStops() {
+    getStops()
+        .then(data => {
+            // Handle the data here or pass it to another function
+            console.log('Data received:', data);
+            const parsedData = parseCSV(data);
+            const stopNumberInput = document.getElementById('stopNumber');
+            const stopNumber = stopNumberInput.value;
+
+            const specificData = getStopInfo(parsedData, stopNumber);
+            const stopName = specificData.stop_name;
+            const outputDiv = document.getElementById('output');
+            outputDiv.innerHTML = `Stop Name for Stop Number ${stopNumber}: ${stopName}`;
+        })
+        .catch(error => {
+            // Handle errors here
+            console.error('Error:', error);
+            const outputDiv = document.getElementById('output');
+            outputDiv.innerHTML = `Stop number invalid`;
+        });
+}
+
+function parseCSV(text) {
+    const lines = text.split('\n');
+    const columns = lines[0].trim().split(',');
+    const data = [];
+
+    for (let i = 1; i < lines.length; i++) {
+        const values = lines[i].trim().split(',');
+
+        // Check if values is not empty before processing
+        if (values.length === columns.length) {
+            const entry = {};
+
+            for (let j = 0; j < columns.length; j++) {
+                entry[columns[j].trim()] = values[j].trim();
+            }
+
+            data.push(entry);
+        }
+    }
+
+    return data;
+}
+
+function getRouteInfo(data, routeShortName) {
+    return data.find(entry => entry.route_short_name === routeShortName);
+}
+
+function getStopInfo(data, stopId) {
+    return data.find(entry => entry.stop_id === stopId);
+}
+
+function getRoutes() {
+    return fetch('http://127.0.0.1:5500/frontend/gtfs-data/routes.txt')
+      .then(response => response.text())
+      .then((data) => {
+        console.log(data);
+        return data;
+      });
+  }
+
+function getStops() {
+    return fetch('http://127.0.0.1:5500/frontend/gtfs-data/stops.txt')
+    .then(response => response.text())
+    .then((data) => {
+      console.log(data);
+      return data;
     });
 }
