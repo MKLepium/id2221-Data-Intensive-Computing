@@ -25,7 +25,7 @@ object DataBase_Connector {
     val preparedStatement: PreparedStatement = connection.prepareStatement(insertSQL)
 
     try {
-      // Disable auto-commit to start a batch
+      // Disable auto-commit to start a batch 
       connection.setAutoCommit(false)
 
       // Iterate over the list of BusData objects and add them to the batch
