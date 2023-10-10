@@ -65,8 +65,8 @@ object ParseXMLFunction extends ProcessFunction[String, Unit] {
           println("No bus nodes found in the XML.")
         } 
         // Send the list of BusData objects to the database connector
-        val c =  DataBase_Connector.getConnection()
-        DataBase_Connector.send_entries(busDataList, c)
+        val connection =  DataBase_Connector.getConnection()
+        DataBase_Connector.send_entries(busDataList, connection)
         connection.close()
       } 
     } else {
