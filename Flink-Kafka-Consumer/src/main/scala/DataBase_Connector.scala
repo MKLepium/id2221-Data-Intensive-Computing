@@ -48,7 +48,7 @@ object DataBase_Connector {
       preparedStatement.executeBatch()
 
       // Commit the transaction
-      connection.commit()
+      //connection.commit()
     } catch {
       case e: Exception =>
         println("Error inserting data into database")
