@@ -25,39 +25,44 @@ object ParseXMLFunction extends ProcessFunction[String, Unit] {
     ctx: ProcessFunction[String, Unit]#Context,
     out: Collector[Unit]
   ): Unit = {
-    // Parse the XML and extract relevant fields
-    val busElement = scala.xml.XML.loadString(xml)
-    val timestamp = busElement.attribute("timestamp").map(_.text).getOrElse("")
-    val busNodes = busElement \ "bus"
-    println(s"Processing element: $timestamp, Result: $busNodes")
-    for(node <- busNodes) {
-      //println(s"Processing node: $node")
-      // Extract common fields from the first bus element (assuming they are the same for all)
-      if (node.nonEmpty) {
-        val busAttributes = node.head.attributes
-        val dev = busAttributes("dev").text
-        val lat = busAttributes("lat").text
-        val lon = busAttributes("lon").text
-        val head = busAttributes("head").text
-        val fix = busAttributes("fix").text
-        val route = busAttributes("route").text
-        val stop = busAttributes("stop").text
-        val next = busAttributes("next").text
-        val code = busAttributes("code").text
-        val fer = busAttributes("fer").text
+      // Parse the XML and extract relevant fields
+      // Check if the XML message is empty
+    if (xml.nonEmpty) {
+      val busElement = scala.xml.XML.loadString(xml)
+      val timestamp = busElement.attribute("timestamp").map(_.text).getOrElse("")
+      val busNodes = busElement \ "bus"
+      println(s"Processing element: $timestamp, Result: $busNodes")
+      for(node <- busNodes) {
+        //println(s"Processing node: $node")
+        // Extract common fields from the first bus element (assuming they are the same for all)
+        if (node.nonEmpty) {
+          val busAttributes = node.head.attributes
+          val dev = busAttributes("dev").text
+          val lat = busAttributes("lat").text
+          val lon = busAttributes("lon").text
+          val head = busAttributes("head").text
+          val fix = busAttributes("fix").text
+          val route = busAttributes("route").text
+          val stop = busAttributes("stop").text
+          val next = busAttributes("next").text
+          val code = busAttributes("code").text
+          val fer = busAttributes("fer").text
 
-        // Create a BusData object
-        val busData = BusData(dev, timestamp, lat, lon, head, fix, route, stop, next, code, fer)
-        //println(s"BusData object: $busData")
+          // Create a BusData object
+          val busData = BusData(dev, timestamp, lat, lon, head, fix, route, stop, next, code, fer)
+          //println(s"BusData object: $busData")
 
-        // Send the BusData object to the "output collector"
-        val conn = DataBase_Connector.getConnection()
-        DataBase_Connector.send_entry(busData, conn)
-      }
-      
-
-
+          // Send the BusData object to the "output collector"
+          val conn = DataBase_Connector.getConnection()
+          DataBase_Connector.send_entry(busData, conn)
+        } else {
+          // Handle the case where there are no bus nodes in the XML
+          println("No bus nodes found in the XML.")
+        } 
+      } 
+    } else {
+        // Handle the case where the entire XML message is empty
+        println("Empty XML message.")
     }
-
   }
 }
