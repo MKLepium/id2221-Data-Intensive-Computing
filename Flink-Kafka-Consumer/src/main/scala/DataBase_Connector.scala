@@ -58,6 +58,7 @@ object DataBase_Connector {
         connection.rollback()
     } finally {
       preparedStatement.close()
+      
     }
   }
 }

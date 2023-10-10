@@ -67,6 +67,7 @@ object ParseXMLFunction extends ProcessFunction[String, Unit] {
         // Send the list of BusData objects to the database connector
         val c =  DataBase_Connector.getConnection()
         DataBase_Connector.send_entries(busDataList, c)
+        connection.close()
       } 
     } else {
         // Handle the case where the entire XML message is empty
