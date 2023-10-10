@@ -19,6 +19,7 @@ object DataBase_Connector {
       INSERT INTO bus_data_schema.bus_data
       (dev, time, lat, lon, head, fix, route, stop, next, code, fer)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      ON CONFLICT (dev, time) DO NOTHING
     """
 
     // Use a PreparedStatement to insert the data safely (to prevent SQL injection)
