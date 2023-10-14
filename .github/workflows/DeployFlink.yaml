@@ -5,7 +5,9 @@ name: Deploy Gatherer
 on:
   push:
     paths:
-      - 'Flink-Kafka-Consumer/**'  # Specify the path to your subproject
+      - 'Flink-Kafka-Consumer/**'
+    paths-ignore:
+      - 'Flink-Kafka-Consumer/README.md'
 
 jobs:
   deploy:

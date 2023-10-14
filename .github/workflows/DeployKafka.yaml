@@ -4,7 +4,9 @@ name: Deploy Kafka
 on:
   push:
     paths:
-      - 'Kafka/**'  # Specify the path to your subproject
+      - 'Kafka/**' 
+    paths-ignore:
+      - 'Kafka/README.md'
 
 jobs:
   deploy:
@@ -21,8 +23,8 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_PASSWORD }}  # I missnamed it in GIT
           port: ${{ secrets.SERVER_PORT }}
-          source: 'Kafka/'  # Specify the path of the /Gatherer folder in your GitHub repo
-          target: '/opt'  # Specify the remote path where you want to copy your application
+          source: 'Kafka/'  
+          target: '/opt'  
 
       - name: Start application
         uses: appleboy/ssh-action@master
@@ -31,8 +33,6 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_PASSWORD }}  # I missnamed it in GIT
           port: ${{ secrets.SERVER_PORT }}
-          # TODO: Change the script to actually use kafka.
-          # TODO: Check if permissions are correct.
           # TODO: Not sure if the restart of both is necessary. But for the time it works.
           script: |
             cp /opt/Gatherer/Kafka/server.properties /opt/installed-kafka/config/server.properties

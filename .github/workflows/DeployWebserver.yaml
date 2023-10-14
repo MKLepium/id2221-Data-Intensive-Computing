@@ -4,7 +4,9 @@ name: Deploy Kafka
 on:
   push:
     paths:
-      - 'Webserver/**'  # Specify the path to your subproject
+      - 'Webserver/**'
+    paths-ignore:
+      - 'Webserver/README.md'
 
 jobs:
   deploy:
@@ -21,8 +23,8 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_PASSWORD }}  # I missnamed it in GIT
           port: ${{ secrets.SERVER_PORT }}
-          source: 'Webserver/'  # Specify the path of the /Gatherer folder in your GitHub repo
-          target: '/opt'  # Specify the remote path where you want to copy your application
+          source: 'Webserver/'
+          target: '/opt'  
 
       - name: Start application
         uses: appleboy/ssh-action@master

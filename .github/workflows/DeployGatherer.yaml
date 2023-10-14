@@ -5,7 +5,9 @@ name: Deploy Gatherer
 on:
   push:
     paths:
-      - 'Gatherer/**'  # Specify the path to your subproject
+      - 'Gatherer/**'  
+    paths-ignore:
+      - 'Gatherer/README.md'  
 
 jobs:
   deploy:
@@ -22,8 +24,8 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_PASSWORD }}  # I missnamed it in GIT
           port: ${{ secrets.SERVER_PORT }}
-          source: 'Gatherer/'  # Specify the path of the /Gatherer folder in your GitHub repo
-          target: '/opt'  # Specify the remote path where you want to copy your application
+          source: 'Gatherer/'  
+          target: '/opt'  
 
             
 
