@@ -1,0 +1,14 @@
+FROM sbtscala/scala-sbt:openjdk-oraclelinux8-11.0.16_1.8.1_3.2.1
+
+# Copy Necessary Files
+COPY ./project/ /app/project
+COPY ./build.sbt /app/build.sbt
+COPY ./src/ /app/src
+
+
+# Build Application
+WORKDIR /app
+RUN sbt compile
+
+# Run Application
+ENTRYPOINT sbt run
