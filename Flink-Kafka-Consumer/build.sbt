@@ -3,7 +3,7 @@ scalaVersion := "2.12.11"
 
 libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % "2.1.1"
 
-// Apache Flink dependencies-test- 
+// Apache Flink dependencies-test-  
 val flinkVersion = "1.14.6"
 libraryDependencies ++= Seq(
   "org.apache.flink" %% "flink-clients" % flinkVersion,
