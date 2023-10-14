@@ -6,8 +6,6 @@ on:
   push:
     paths:
       - 'DB/**'
-    paths-ignore:
-      - 'DB/README.md'
 
 jobs:
   deploy:

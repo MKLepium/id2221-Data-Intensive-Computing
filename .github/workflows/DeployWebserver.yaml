@@ -5,8 +5,6 @@ on:
   push:
     paths:
       - 'Webserver/**'
-    paths-ignore:
-      - 'Webserver/README.md'
 
 jobs:
   deploy:

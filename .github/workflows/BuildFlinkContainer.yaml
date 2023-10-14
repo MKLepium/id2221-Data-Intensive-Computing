@@ -4,8 +4,6 @@ on:
   push:
     paths:
       - 'Flink-Kafka-Consumer/**'
-    paths-ignore:
-      - 'Flink-Kafka-Consumer/README.md'
 
 jobs:
   build:

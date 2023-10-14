@@ -6,8 +6,6 @@ on:
   push:
     paths:
       - 'Gatherer/**'  
-    paths-ignore:
-      - 'Gatherer/README.md'  
 
 jobs:
   deploy:
