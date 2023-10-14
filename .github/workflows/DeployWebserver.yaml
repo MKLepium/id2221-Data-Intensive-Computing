@@ -4,50 +4,53 @@ on:
   push:
     paths:
       - 'Webserver/**'
-      - "Frontend/**"
+      - 'Frontend/**'
 
 jobs:
   build:
     name: Webserver, Build & push docker image
     runs-on: ubuntu-latest
+    env:
+      IMG_NAME: mklepium/id2221-webserver
+    
     steps:
-      - name: Webserver, Build & push docker image
-        env:
-          IMG_NAME: mklepium/id2221-webserver
-        steps:
-          - name: Webserver, Checkout
-            uses: actions/checkout@v4
-            with:
-              ref: ${{ github.ref }} # Needed for running the workflow on different branches
-          - name: Webserver, Set up Docker Buildx
-            uses: docker/setup-buildx-action@v1
-          - name: Webserver, Login to Docker Hub
-            uses: docker/login-action@v1 
-            with:
-              username: ${{ secrets.DOCKER_USERNAME }}
-              password: ${{ secrets.DOCKER_PASSWORD }}
-          - name: Webserver, Build and push Docker image
-            uses: docker/build-push-action@v2
-            with:
-              push: true
-              tags: ${{ env.IMG_NAME }}:latest
-              context: .
-              file: Scripts/Deployment/Webserver-Dockerfile
-              labels: |
-                org.opencontainers.image.title=${{ env.IMG_NAME }}
-                org.opencontainers.image.source=https://github.com/mklepium/id2221-Data-Intensive-Computing
-          - name: Webserver, SSH and Deploy Docker Container on Server
-            uses: appleboy/ssh-action@master
-            with:
-              host: ${{ secrets.SERVER_HOST }}
-              username: ${{ secrets.SERVER_USER }}
-              port: ${{ secrets.SERVER_PORT }}
-              key: ${{ secrets.SERVER_PASSWORD }}  # I missnamed it in GIT
-              script: |
-                cd /opt/Webserver
-                docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-                docker pull ${{ env.IMG_NAME }}:latest
-                docker stop Webserver || true
-                docker logs Webserver > dockerlog_$(date +"%Y_%m_%d_%I_%M_%p").log || true
-                docker rm Webserver || true
-                docker run --network="host" --expose 8080 -d --name Webserver ${{ env.IMG_NAME }}:latest
+      - name: Webserver, Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }} # Needed for running the workflow on different branches
+
+      - name: Webserver, Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Webserver, Login to Docker Hub
+        uses: docker/login-action@v1 
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Webserver, Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: ${{ env.IMG_NAME }}:latest
+          context: .
+          file: Scripts/Deployment/Webserver-Dockerfile
+          labels: |
+            org.opencontainers.image.title=${{ env.IMG_NAME }}
+            org.opencontainers.image.source=https://github.com/mklepium/id2221-Data-Intensive-Computing
+
+      - name: Webserver, SSH and Deploy Docker Container on Server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          port: ${{ secrets.SERVER_PORT }}
+          key: ${{ secrets.SERVER_PASSWORD }}  # I missnamed it in GIT
+          script: |
+            cd /opt/Webserver
+            docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+            docker pull ${{ env.IMG_NAME }}:latest
+            docker stop Webserver || true
+            docker logs Webserver > dockerlog_$(date +"%Y_%m_%d_%I_%M_%p").log || true
+            docker rm Webserver || true
+            docker run --network="host" --expose 8080 -d --name Webserver ${{ env.IMG_NAME }}:latest

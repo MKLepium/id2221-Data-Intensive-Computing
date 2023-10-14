@@ -50,7 +50,7 @@ fetch(url, {headers: {'Content-Type':'applicaton/json'}, method: 'GET'})
 
 var markerDiv = document.createElement('div');
 markerDiv.className = 'number-marker';
-
+ 
 function createNumberMarker(number, lat, lon, css) {
     var markerDiv = document.createElement('div');
     markerDiv.className = 'number-marker ' + css;
