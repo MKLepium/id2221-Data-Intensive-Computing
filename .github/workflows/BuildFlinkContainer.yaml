@@ -10,7 +10,7 @@ jobs:
     name: Build & push docker image
     runs-on: ubuntu-latest
     env:
-      IMG_NAME: ${{ github.repository }}-flink-kafka-consumer
+      IMG_NAME: id2221-flink-kafka-consumer
     steps:
       - name: Checkout
         uses: actions/checkout@v4
