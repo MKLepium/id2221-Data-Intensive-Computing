@@ -1,6 +1,6 @@
 # Flink Kafka Consumer
 
-This Consumer takes data from a Kafka cluster, parses it from XML and inserts it into a PostgreSQL database.
+This Consumer takes data from a Kafka cluster, parses it from XML and inserts it into a PostgreSQL database. 
 
 ## Data Structure
 
