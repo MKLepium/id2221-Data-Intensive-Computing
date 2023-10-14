@@ -1,14 +1,16 @@
 import requests
 import time
+import sys
 from dotenv import load_dotenv
 import os
 from confluent_kafka import Producer
+import logging
+
+logging.basicConfig(level=logging.INFO)
 
 # Load environment variables from .env file
-# 
 load_dotenv()
 
-# Get the API key from the environment variable
 api_key = os.getenv("API_KEY")
 if api_key is None:
     print("API_KEY environment variable not set..")
@@ -16,38 +18,56 @@ if api_key is None:
 
 # Kafka configuration 
 kafka_config = {
-    'bootstrap.servers': 'localhost:9092',  # Replace with your Kafka broker(s)
+    'bootstrap.servers': 'localhost:9092', 
     'client.id': 'xml-producer'
 }
 
 # Create a Kafka producer instance
-producer = Producer(kafka_config)
 
 # URL to fetch data from
 url = f"https://opendata.straeto.is/bus/{api_key}/status.xml"
 print(url)
 
-# Function to fetch XML data and push it to Kafka
-def fetch_and_push_to_kafka():
+def fetch_data(url, timeout=10):
     try:
-        response = requests.get(url)
-        if response.status_code == 200:
-            # Push the XML response as a message to a Kafka topic
-            producer.produce("xml-data", key=None, value=response.text)
-            producer.flush()  # Ensure that the message is sent
-            print("XML message pushed to Kafka topic 'xml-messages'")
-        else:
-            print(f"HTTP request failed with status code {response.status_code}")
+        response = requests.get(url, timeout=timeout)
+        response.raise_for_status()
+        return response.text
+    except requests.RequestException as e:
+        logging.warning(f"Request failed: {str(e)}")
+        return None
+
+def push_to_kafka(data, topic, kafka_config):
+    producer = Producer(**kafka_config)
+    try:
+        # Push the XML data to Kafka
+        producer.produce(topic, value=data)
+        producer.flush()
     except Exception as e:
-        print(f"An error occurred: {str(e)}")
+        logging.error(f"Failed to push data to Kafka: {str(e)}")
+
+def fetch_and_push_to_kafka(url, kafka_config, retries=3, timeout=10, topic="xml-data"):
+    for _ in range(retries):
+        data = fetch_data(url, timeout)
+        if data is not None:
+            push_to_kafka(data, topic, kafka_config)
+            return True
+    return False
+
 
 # Configuration
-interval_seconds = 10  # Change this to your desired interval
+interval_seconds = 10
 iteration = 0
 
 # Main loop
 while True:
-    fetch_and_push_to_kafka()
+    if fetch_and_push_to_kafka(url, kafka_config): 
+        print("Successfully fetched and pushed data to Kafka")
+    else:
+        print("Failed to fetch and push data to Kafka")
+
     time.sleep(interval_seconds)
     print("Iteration: " + str(iteration))
+    sys.stdout.flush() # Why is it not printing :c
+    sys.stderr.flush() # Why is it not printing :c
     iteration += 1
