@@ -2,6 +2,18 @@
 
 This is the Mono repository for the final project of the course "Data Intensive Computing" at KTH Royal Institute of Technology. The project is divided into 7 parts:
 
+# 0. Deployment
+
+The deployment works as follows:
+
+1. The datagatherer is being deployed directly bare metal
+2. The Kafka cluster is setup as a service on the same server, it will only be restarted with the updated configuration
+3. The Flink-Kafka-Consumer is being deployed as a docker container on the same server
+4. The PostgreSQL script is only being copied on the server, it is not being executed (We assume that no changes are made to the database structure)
+5. The BatchDataClean is currently not being deployed
+6. The Webserver is being deployed directly bare metal
+7. The Frontend is currently not being deployed.
+
 
 # 1. Data Gathering
 
