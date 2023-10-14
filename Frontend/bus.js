@@ -42,7 +42,7 @@ fetch(url, {headers: {'Content-Type':'applicaton/json'}, method: 'GET'})
     });
 }
     
-    //demo datas
+//demo data
 // const buses = [
 // {fer:'1-A', lat:64.1433266666667, lon:-21.9473833333333, route:'1'},{fer:'1-B', lat:64.0704133333333, lon:-21.9580666666667, route:'1'},
 // {fer:'2-A', lat:64.1341383333333, lon:-21.87095, route:'2'},{fer:'3-A', lat:64.146405, lon:-21.9420666666667, route:'3'},

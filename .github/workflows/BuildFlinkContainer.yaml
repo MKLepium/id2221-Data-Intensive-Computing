@@ -33,9 +33,6 @@ jobs:
           labels: |
             org.opencontainers.image.title=${{ env.IMG_NAME }}
             org.opencontainers.image.source=https://github.com/mklepium/id2221-Data-Intensive-Computing
-        env:
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       - name: SSH and Deploy Docker Container on Server
         uses: appleboy/ssh-action@master
         with:

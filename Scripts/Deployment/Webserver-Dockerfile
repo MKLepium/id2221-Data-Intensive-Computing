@@ -1,0 +1,14 @@
+# Use python base image
+FROM python:3.8-slim-buster
+
+WORKDIR /Webserver
+
+# Install dependencies
+COPY ./Webserver/requirements.txt requirements.txt
+RUN pip3 install -r requirements.txt
+
+COPY ./Webserver/webserver.py /Webserver/webserver.py
+COPY ./Frontend/ /Webserver/Frontend/
+
+
+CMD [ "python3", "webserver.py"]

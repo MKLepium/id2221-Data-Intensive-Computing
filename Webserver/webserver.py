@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask import send_from_directory
 from flask_cors import CORS
 import psycopg2
 
@@ -20,19 +21,21 @@ def get_latest_bus_data_from_db():
     cur = conn.cursor()
     # Returns the fer, route, lat and lon of all buses (potentially only buses with route 1-36 if we filter that in the backend, but we could also do it in the frontend no problem)
     # filter for only busses with route 1-36
+    # Hopefully this works
     cur.execute("""
-        SELECT b.time, b.fer, b.route, b.lat, b.lon
-            FROM bus_data_schema.bus_data b
-            JOIN (
-                SELECT MAX("time") AS max_time
-                FROM bus_data_schema.bus_data
-                WHERE
-                    CAST(SUBSTRING(fer, '^\d+') AS INTEGER) >= 0
-                    AND CAST(SUBSTRING(fer, '^\d+') AS INTEGER) <= 36
-            ) t ON b."time" = t.max_time
+    SELECT b.time, b.fer, b.route, b.lat, b.lon
+    FROM bus_data_schema.bus_data b
+    WHERE 
+        (b.route, b.time) IN (
+            SELECT route, MAX(time)
+            FROM bus_data_schema.bus_data
+            WHERE 
+                CAST(SUBSTRING(fer, '^\d+') AS INTEGER) >= 0
+                AND CAST(SUBSTRING(fer, '^\d+') AS INTEGER) <= 36
+            GROUP BY route
+        )
+
     """)
-
-
     data = cur.fetchall()
     cur.close()
     conn.close()
@@ -46,6 +49,27 @@ def get_bus_data():
         return jsonify({"data": data})
     except Exception as e:
         return jsonify({"error": str(e)})
+
+@app.route('/')
+def index():
+    return "Hello, World!"
+
+@app.route('/<path:filename>.html')
+def serve_html(filename):
+    return send_from_directory('Frontend', f'{filename}.html')
+
+@app.route('/<path:filename>.js')
+def serve_js(filename):
+    return send_from_directory('Frontend', f'{filename}.js')
+
+@app.route('/styles/<path:filename>.css')
+def serve_styles_css(filename):
+    return send_from_directory('Frontend/styles', f'{filename}.css')
+
+
+@app.route('/gtfs-data/<path:path>')
+def serve_gtfs_data(path):
+    return send_from_directory('Frontend/gtfs-data', path)
 
 if __name__ == '__main__':
     app.run(debug=True, port=8080, host='0.0.0.0')
