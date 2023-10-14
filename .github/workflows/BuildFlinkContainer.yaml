@@ -47,7 +47,7 @@ jobs:
             cd /opt/Flink-Kafka-Consumer
             docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
             docker pull ${{ env.IMG_NAME }}:latest
-            docker stop my_running_container || true
-            docker logs my_running_container > dockerlog_$(date +"%Y_%m_%d_%I_%M_%p").log || true
-            docker rm my_running_container || true
-            docker run -d --name my_running_container ${{ env.IMG_NAME }}:latest
+            docker stop flink_kafka_consumer || true
+            docker logs flink_kafka_consumer > dockerlog_$(date +"%Y_%m_%d_%I_%M_%p").log || true
+            docker rm flink_kafka_consumer || true
+            docker run --network="host" -d --name flink_kafka_consumer ${{ env.IMG_NAME }}:latest
