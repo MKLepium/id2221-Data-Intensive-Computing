@@ -72,17 +72,20 @@ function createNumberMarker(number, lat, lon, css) {
 
 function addMarkers(buses) {
     Object.keys(buses).forEach(bus => {
-        let currRoute = buses[bus][2];
-        let currLat = buses[bus][3];
-        let currLon = buses[bus][4];
-        let marker = createNumberMarker(currRoute, currLat, currLon, 'route-'+currRoute);
-        marker.addTo(mymap);
-        let routeInfo = getRouteInfo(routeData, currRoute);
-        let stopInfo = getStopInfo(stopData, "10000802"); //placeholder, replace with nextStop
-        let modifiedString = routeInfo.route_long_name.replace(/<->/g, '⇄');
-        let popupText = 'Route: ' + modifiedString + '<br> Next stop: ' + stopInfo.stop_name;
-        marker.bindPopup(popupText);
-        markers.push(marker);
+        if (buses[bus][2] !== "") { //to avoid errors when route is empty
+            let currRoute = buses[bus][2];
+            let currLat = buses[bus][3];
+            let currLon = buses[bus][4];
+            let nextStop = buses[bus][5];
+            let marker = createNumberMarker(currRoute, currLat, currLon, 'route-'+currRoute);
+            marker.addTo(mymap);
+            let routeInfo = getRouteInfo(routeData, currRoute);
+            let stopInfo = getStopInfo(stopData, nextStop);
+            let modifiedString = routeInfo.route_long_name.replace(/<->/g, '⇄');
+            let popupText = 'Route: ' + modifiedString + '<br> Next stop: ' + stopInfo.stop_name;
+            marker.bindPopup(popupText);
+            markers.push(marker);
+        }
       });
 }
 
@@ -96,7 +99,7 @@ function processRoutes() {
     getRoutes()
         .then(data => {
             // Handle the data here or pass it to another function
-            console.log('Data received:', data);
+            // console.log('Data received:', data);
             const parsedData = parseCSV(data);
             routeData = parsedData;
         })
@@ -112,7 +115,7 @@ function processStops() {
     getStops()
         .then(data => {
             // Handle the data here or pass it to another function
-            console.log('Data received:', data);
+            // console.log('Data received:', data);
             const parsedData = parseCSV(data);
             stopData = parsedData;
         })
@@ -156,7 +159,7 @@ function getStopInfo(data, stopId) {
 }
 
 function getRoutes() {
-    return fetch('http://127.0.0.1:5500/Frontend/gtfs-data/routes.txt')
+    return fetch('http://88.99.215.78:8080/routes.txt')
       .then(response => response.text())
       .then((data) => {
         // console.log(data);
@@ -165,7 +168,7 @@ function getRoutes() {
   }
 
 function getStops() {
-    return fetch('http://127.0.0.1:5500/Frontend/gtfs-data/stops.txt')
+    return fetch('http://88.99.215.78:8080/stops.txt')
     .then(response => response.text())
     .then((data) => {
     //   console.log(data);
