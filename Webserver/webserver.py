@@ -79,7 +79,7 @@ def serve_styles_css(filename):
     return send_from_directory('Frontend/styles', f'{filename}.css')
 
 
-@app.route('/gtfs-data/<path:path>')
+@app.route('/<path:path>')
 def serve_gtfs_data(path):
     return send_from_directory('Frontend/gtfs-data', path)
 
