@@ -43,10 +43,19 @@ FROM
     recent_buses
 WHERE
     rnk = 1 AND
-    CAST(route AS INTEGER) BETWEEN 0 AND 36;
     """)
 
     data = cur.fetchall()
+
+    filtered_data = []
+    for row in data:
+        try:
+            # Assuming route is the third column, convert it to integer and check if it's between 0 and 36
+            if 0 <= int(row[2]) <= 36:
+                filtered_data.append(row)
+        except ValueError:
+            filtered_data.append(row)
+            pass
 
     cur.close()
     conn.close()
