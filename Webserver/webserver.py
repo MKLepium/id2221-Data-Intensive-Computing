@@ -49,8 +49,9 @@ WHERE
 
     filtered_data = []
     for row in data:
-        if 0 <= int(row[2]) <= 36:
-            filtered_data.append(row)
+        if row[2].isdigit():
+            if 0 <= int(row[2]) <= 36:
+                filtered_data.append(row)
     cur.close()
     conn.close()
     return filtered_data
