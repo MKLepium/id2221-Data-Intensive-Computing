@@ -28,6 +28,7 @@ object ParseXMLFunction extends ProcessFunction[String, Unit] {
       // Parse the XML and extract relevant fields
       // Check if the XML message is empty
     println(s"Processing element: $xml")
+    println(s"XML length: ${xml.length}")
     if (xml.nonEmpty) {
       val busElement = scala.xml.XML.loadString(xml)
       val timestamp = busElement.attribute("timestamp").map(_.text).getOrElse("")
