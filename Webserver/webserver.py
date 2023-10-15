@@ -53,7 +53,7 @@ WHERE
             filtered_data.append(row)
     cur.close()
     conn.close()
-    return data
+    return filtered_data
 
 # Endpoint to retrieve data
 @app.route('/bus/getData', methods=['GET'])
