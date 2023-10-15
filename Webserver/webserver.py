@@ -49,10 +49,8 @@ WHERE
 
     filtered_data = []
     for row in data:
-        try:
-            # Assuming route is the third column, convert it to integer and check if it's between 0 and 36
-            if 0 <= int(row[2]) <= 36:
-                filtered_data.append(row)
+        if 0 <= int(row[2]) <= 36:
+            filtered_data.append(row)
     cur.close()
     conn.close()
     return data
