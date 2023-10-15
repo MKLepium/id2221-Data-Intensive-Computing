@@ -23,33 +23,31 @@ def get_latest_bus_data_from_db():
     # filter for only busses with route 1-36
     # Hopefully this works
     cur.execute("""
-    SELECT 
-        b.time, 
-        b.fer, 
-        b.route, 
-        b.lat, 
-        b.lon,
-        b.next
-    FROM 
-        bus_data_schema.bus_data b
-    WHERE 
-        (b.route, b.time) IN (
-            SELECT 
-                route, 
-                MAX(time)
-            FROM 
-                bus_data_schema.bus_data
-            WHERE 
-                CAST(SUBSTRING(fer, '^\d+') AS INTEGER) >= 0
-                AND CAST(SUBSTRING(fer, '^\d+') AS INTEGER) <= 36
-                AND time > CURRENT_TIMESTAMP - INTERVAL '2 hours 10 minutes'
-            GROUP BY 
-                route
-        )
-        AND b.time > CURRENT_TIMESTAMP - INTERVAL '2 hours 10 minutes';
-
+WITH recent_buses AS (
+    SELECT
+        *,
+        RANK() OVER(PARTITION BY dev ORDER BY time DESC) AS rnk
+    FROM
+        bus_data_schema.bus_data
+    WHERE
+        time >= NOW() - INTERVAL '2 hours' - INTERVAL '10 minutes'
+)
+SELECT
+    time,
+    fer,
+    route,
+    lat,
+    lon,
+    next
+FROM
+    recent_buses
+WHERE
+    rnk = 1 AND
+    CAST(route AS INTEGER) BETWEEN 0 AND 36;
     """)
+
     data = cur.fetchall()
+
     cur.close()
     conn.close()
     return data
