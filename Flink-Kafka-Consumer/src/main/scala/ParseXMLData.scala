@@ -27,11 +27,11 @@ object ParseXMLFunction extends ProcessFunction[String, Unit] {
   ): Unit = {
       // Parse the XML and extract relevant fields
       // Check if the XML message is empty
+    println(s"Processing element: $xml")
     if (xml.nonEmpty) {
       val busElement = scala.xml.XML.loadString(xml)
       val timestamp = busElement.attribute("timestamp").map(_.text).getOrElse("")
       val busNodes = busElement \ "bus"
-      println(s"Processing element: $timestamp, Result: $busNodes")
       // create list to accumulate BusData objects
       var busDataList = List[BusData]()
 
