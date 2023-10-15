@@ -50,6 +50,7 @@ WHERE
     filtered_data = []
     for row in data:
         print(row)
+        print(row[2])
         try:
             # Assuming route is the third column, convert it to integer and check if it's between 0 and 36
             if 0 <= int(row[2]) <= 36:
