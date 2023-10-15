@@ -28,7 +28,8 @@ def get_latest_bus_data_from_db():
         b.fer, 
         b.route, 
         b.lat, 
-        b.lon
+        b.lon,
+        b.next
     FROM 
         bus_data_schema.bus_data b
     WHERE 
