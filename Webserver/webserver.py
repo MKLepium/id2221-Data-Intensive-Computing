@@ -42,7 +42,7 @@ SELECT
 FROM
     recent_buses
 WHERE
-    rnk = 1 AND
+    rnk = 1 AND;
     """)
 
     data = cur.fetchall()
