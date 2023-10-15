@@ -81,7 +81,7 @@ function addMarkers(buses) {
             marker.addTo(mymap);
             let routeInfo = getRouteInfo(routeData, currRoute);
             let stopInfo = getStopInfo(stopData, nextStop);
-            let modifiedString = routeInfo.route_long_name.replace(/<->/g, '⇄');
+            let modifiedString = routeInfo.route_long_name.replace(/<->/g, '⇄').replace(/->/g, '➝');
             let popupText = 'Route: ' + modifiedString + '<br> Next stop: ' + stopInfo.stop_name;
             marker.bindPopup(popupText);
             markers.push(marker);
