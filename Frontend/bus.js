@@ -1,5 +1,8 @@
 // Initialize the map
 const mymap = L.map('map').setView([64.122518, -21.869172], 10.5); // Set the initial center and zoom level
+var markers = [];
+var routeData = {};
+var stopData = {};
 
 // Add a tile layer (you can choose different tile providers)
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -7,6 +10,8 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(mymap);
 
 fetchData();
+processRoutes();
+processStops();
 
 setInterval(fetchData, 5000); //5 seconds
 
@@ -70,16 +75,21 @@ function addMarkers(buses) {
         let currRoute = buses[bus][2];
         let currLat = buses[bus][3];
         let currLon = buses[bus][4];
-        createNumberMarker(currRoute, currLat, currLon, 'route-'+currRoute).addTo(mymap);
+        let marker = createNumberMarker(currRoute, currLat, currLon, 'route-'+currRoute);
+        marker.addTo(mymap);
+        let routeInfo = getRouteInfo(routeData, currRoute);
+        let stopInfo = getStopInfo(stopData, "10000802"); //placeholder, replace with nextStop
+        let modifiedString = routeInfo.route_long_name.replace(/<->/g, '⇄');
+        let popupText = 'Route: ' + modifiedString + '<br> Next stop: ' + stopInfo.stop_name;
+        marker.bindPopup(popupText);
+        markers.push(marker);
       });
 }
 
 function clearMarkers() {
-    mymap.eachLayer(function (layer) {
-        if (layer instanceof L.Marker) {
-            mymap.removeLayer(layer);
-        }
-    });
+    for (var i = 0; i < markers.length; i++) {
+        mymap.removeLayer(markers[i]);
+    }
 }
 
 function processRoutes() {
@@ -88,13 +98,7 @@ function processRoutes() {
             // Handle the data here or pass it to another function
             console.log('Data received:', data);
             const parsedData = parseCSV(data);
-            const routeNumberInput = document.getElementById('routeNumber');
-            const routeNumber = routeNumberInput.value;
-
-            const specificData = getRouteInfo(parsedData,routeNumber);
-            const routeLongName = specificData.route_long_name;
-            const outputDiv = document.getElementById('output');
-            outputDiv.innerHTML = `Route Name for Route Number ${routeNumber}: ${routeLongName}`;
+            routeData = parsedData;
         })
         .catch(error => {
             // Handle errors here
@@ -110,13 +114,7 @@ function processStops() {
             // Handle the data here or pass it to another function
             console.log('Data received:', data);
             const parsedData = parseCSV(data);
-            const stopNumberInput = document.getElementById('stopNumber');
-            const stopNumber = stopNumberInput.value;
-
-            const specificData = getStopInfo(parsedData, stopNumber);
-            const stopName = specificData.stop_name;
-            const outputDiv = document.getElementById('output');
-            outputDiv.innerHTML = `Stop Name for Stop Number ${stopNumber}: ${stopName}`;
+            stopData = parsedData;
         })
         .catch(error => {
             // Handle errors here
@@ -158,19 +156,19 @@ function getStopInfo(data, stopId) {
 }
 
 function getRoutes() {
-    return fetch('http://127.0.0.1:5500/frontend/gtfs-data/routes.txt')
+    return fetch('http://127.0.0.1:5500/Frontend/gtfs-data/routes.txt')
       .then(response => response.text())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         return data;
       });
   }
 
 function getStops() {
-    return fetch('http://127.0.0.1:5500/frontend/gtfs-data/stops.txt')
+    return fetch('http://127.0.0.1:5500/Frontend/gtfs-data/stops.txt')
     .then(response => response.text())
     .then((data) => {
-      console.log(data);
+    //   console.log(data);
       return data;
     });
 }

@@ -1,8 +1,11 @@
 /* Customize the map container's size */
-#map {
-    height: 400px;
+
+#map{
+    position: absolute;
+    top: 0;
+    bottom: 0;
     width: 100%;
-}
+  }
   
 .number-marker {
     background-color: #000;
