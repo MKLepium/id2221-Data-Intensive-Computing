@@ -29,8 +29,12 @@ object ParseXMLFunction extends ProcessFunction[String, Unit] {
       // Check if the XML message is empty
     println(s"Processing element: $xml")
     println(s"XML length: ${xml.length}")
-    if (xml.nonEmpty) {
-      val busElement = scala.xml.XML.loadString(xml)
+    // Sometimes there are whitespaces after the closing tag </busstate>, so we need to remove them
+    val xml_trimmed = xml.trim()
+    if (xml_trimmed != xml) println("XML message had trailing whitespaces.")
+    
+    if (xml_trimmed.nonEmpty) {
+      val busElement = scala.xml.XML.loadString(xml_trimmed)
       val timestamp = busElement.attribute("timestamp").map(_.text).getOrElse("")
       val busNodes = busElement \ "bus"
       // create list to accumulate BusData objects
