@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 import os
 from confluent_kafka import Producer
 import logging
+import xml.etree.ElementTree as ET
 
 logging.basicConfig(level=logging.INFO)
 
