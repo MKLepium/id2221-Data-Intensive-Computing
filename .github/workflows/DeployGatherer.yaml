@@ -52,4 +52,4 @@ jobs:
             docker stop Gatherer || true
             docker logs Gatherer > dockerlog_$(date +"%Y_%m_%d_%I_%M_%p").log || true
             docker rm Gatherer || true
-            docker run --network="host" -e API_KEY="$${{ secrets.API_KEY }}" -d --name gatherer ${{ env.IMG_NAME }}:latest
+            docker run --network="host" -e API_KEY="${{ secrets.API_KEY }}" -d --name gatherer ${{ env.IMG_NAME }}:latest
