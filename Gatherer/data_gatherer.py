@@ -13,7 +13,7 @@ if os.path.exists(".env"):
     load_dotenv() 
 # Get API key from environment variable
 
-
+ 
 api_key = os.getenv("API_KEY")
 if api_key is None:
     print("API_KEY environment variable not set..")
