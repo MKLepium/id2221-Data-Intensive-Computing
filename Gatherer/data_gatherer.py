@@ -9,7 +9,10 @@ import logging
 logging.basicConfig(level=logging.INFO)
 
 # Load environment variables from .env file
-load_dotenv() 
+if os.path.exists(".env"):
+    load_dotenv() 
+# Get API key from environment variable
+
 
 api_key = os.getenv("API_KEY")
 if api_key is None:
