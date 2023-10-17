@@ -7,7 +7,8 @@ from confluent_kafka import Producer
 import logging
 import xml.etree.ElementTree as ET
 
-logging.basicConfig(level=logging.INFO)
+
+logging.basicConfig(level=logging.DEBUG)
 
 # Load environment variables from .env file
 if os.path.exists(".env"):
@@ -37,6 +38,7 @@ def fetch_data(url, timeout):
         response = requests.get(url, timeout=timeout)
         response.raise_for_status()
         xml_content = response.text
+        logging.debug(f"XML content: {xml_content}")
         try:
             # Attempt to parse the XML to check for proper formatting
             root = ET.fromstring(xml_content)
