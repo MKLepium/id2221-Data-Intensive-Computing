@@ -17,7 +17,7 @@ if os.path.exists(".env"):
 api_key = os.getenv("API_KEY")
 if api_key is None:
     print("API_KEY environment variable not set..") 
-    exit()
+    exit() 
 
 # Kafka configuration 
 kafka_config = {
