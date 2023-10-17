@@ -31,11 +31,18 @@ kafka_config = {
 url = f"https://opendata.straeto.is/bus/{api_key}/status.xml"
 print(url)
 
-def fetch_data(url, timeout=10):
+def fetch_data(url, timeout):
     try:
         response = requests.get(url, timeout=timeout)
         response.raise_for_status()
-        return response.text
+        xml_content = response.text
+        try:
+            # Attempt to parse the XML to check for proper formatting
+            root = ET.fromstring(xml_content)
+            return xml_content
+        except ET.ParseError as e:
+            logging.warning(f"XML parsing error: {str(e)}")
+            return None
     except requests.RequestException as e:
         logging.warning(f"Request failed: {str(e)}")
         return None
@@ -49,7 +56,7 @@ def push_to_kafka(data, topic, kafka_config):
     except Exception as e:
         logging.error(f"Failed to push data to Kafka: {str(e)}")
 
-def fetch_and_push_to_kafka(url, kafka_config, retries=3, timeout=10, topic="xml-data"):
+def fetch_and_push_to_kafka(url, kafka_config, retries=3, timeout=15, topic="xml-data"):
     for _ in range(retries):
         data = fetch_data(url, timeout)
         if data is not None:
