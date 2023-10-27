@@ -8,7 +8,7 @@ import logging
 import xml.etree.ElementTree as ET
 
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 
 # Load environment variables from .env file
 if os.path.exists(".env"):
