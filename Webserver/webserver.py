@@ -30,7 +30,7 @@ WITH recent_buses AS (
     FROM
         bus_data_schema.bus_data
     WHERE
-        time >= NOW() - INTERVAL '2 hours' - INTERVAL '10 minutes'
+        time >= NOW() - INTERVAL '1 hours' - INTERVAL '10 minutes'
 )
 SELECT
     time,
