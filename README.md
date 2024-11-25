@@ -1,4 +1,6 @@
-## Final project for the course "Data Intensive Computing" at KTH Royal Institute of Technology
+# Update November 2024: The Links are no longer available and the project has been archived
+
+# Final project for the course "Data Intensive Computing" at KTH Royal Institute of Technology
 
 This is the Mono repository for the final project of the course "Data Intensive Computing" at KTH Royal Institute of Technology. The project is divided into 7 parts:
 
